@@ -28,7 +28,7 @@ namespace PracticeWebApi.Data.Repositories
         {
             using (var con = new SqlConnection(conStr))
             {
-                var users = con.Query<User>("select * from [Auth].[User]");
+                var users = con.Query<User>("select * from [User]");
                 return users;
             }
         }
@@ -38,7 +38,7 @@ namespace PracticeWebApi.Data.Repositories
             using (var con = new SqlConnection(conStr))
             {
                 var user = con.QuerySingle(
-                    $"select * from [Auth].[User] where UserId = {userId}"
+                    $"select * from [User] where UserId = {userId}"
                 );
 
                 return user;
@@ -91,7 +91,7 @@ namespace PracticeWebApi.Data.Repositories
         {
             using (var con = new SqlConnection(conStr))
             {
-                var query = $"delete from [Auth].[User] where UserId = @userId";
+                var query = $"delete from [User] where UserId = @userId";
 
                 var queryParams = new { userId };
 
