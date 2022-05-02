@@ -5,8 +5,8 @@ namespace PracticeWebApi.Business.Services
     public interface IUserService
     {
         List<User> GetUsers();
-        User GetById(int id);
-        User GetByName(string name);
+        User GetUserById(int userId);
+        User AddNewUser(User userInfo);
         User UpdateUser(User user);
         void DeleteUser(int id);
     }

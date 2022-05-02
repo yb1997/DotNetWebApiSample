@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PracticeWebApi.Business.Models;
 using PracticeWebApi.Business.Services;
 using PracticeWebApi.Models;
 using PracticeWebApi.Models.Request;
@@ -30,34 +31,47 @@ namespace PracticeWebApi.Controllers
         [Route("{userId}")]
         public IActionResult GetUserByUserId(int userId)
         {
-            return Ok();
+            var user = _userService.GetUserById(userId);
+            return Ok(user);
         }
 
         [HttpPost]
         public IActionResult AddUser([FromBody] AddUserRequest request)
         {
-            Random random = new Random();
-            var newUser = new User 
+            var userInfo = new User 
             { 
-                Id = random.Next(),
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 BirthDate = request.BirthDate,
             };
-            return Created($"/User/{newUser.Id}", newUser);
+
+            var newUser = _userService.AddNewUser(userInfo);
+
+
+            return Created($"/User/{newUser.UserId}", newUser);
         }
 
         [HttpPatch]
         public IActionResult UpdateUser([FromBody] UpdateUserRequest request)
         {
+            var userInfo = new User
+            {
+                UserId = request.UserId,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                BirthDate = request.BirthDate,
+            };
 
-            return Ok();
+            var updatedUser = _userService.UpdateUser(userInfo);
+
+            return Ok(updatedUser);
         }
 
         [HttpDelete]
         [Route("{userId}")]
         public IActionResult DeleteUser(int userId)
         {
+            _userService.DeleteUser(userId);
             return Ok();
         }
     }

@@ -10,7 +10,9 @@ namespace PracticeWebApi.Data.Repositories
     public interface IUserRepo
     {
         IEnumerable<User> GetAllUsers();
-        Task<User> AddUser(User user);
-        Task DeleteUser(int userId);
+        User GetUserByUserId(int userId);
+        User AddUser(User user);
+        User UpdateUser(User user);
+        void DeleteUser(int userId);
     }
 }

@@ -12,26 +12,6 @@ namespace PracticeWebApi.Business.Services
             _userRepo = userRepo;
         }
 
-        public void DeleteUser(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetByEmail(string email)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public User GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<User> GetUsers()
         {
             var users = _userRepo.GetAllUsers();
@@ -51,9 +31,64 @@ namespace PracticeWebApi.Business.Services
             return usersList;
         }
 
-        public User UpdateUser(User user)
+        public User GetUserById(int userId)
         {
-            throw new NotImplementedException();
+            var user = _userRepo.GetUserByUserId(userId);
+
+            return new User
+            {
+                UserId=user.UserId,
+                BirthDate=user.BirthDate,
+                FirstName=user.FirstName,
+                LastName=user.LastName
+            };
+
+        }
+
+        public User AddNewUser(User userInfo)
+        {
+            var entityUser = new Data.Entities.User
+            {
+                FirstName = userInfo.FirstName,
+                LastName = userInfo.LastName,
+                BirthDate = userInfo.BirthDate
+            };
+
+            var newUser = _userRepo.AddUser(entityUser);
+
+            return new User
+            {
+                UserId = newUser.UserId,
+                FirstName = newUser.FirstName,
+                LastName = newUser.LastName,
+                BirthDate = newUser.BirthDate,
+            };
+        }
+
+        public User UpdateUser(User userInfo)
+        {
+            var entityUser = new Data.Entities.User
+            {
+                UserId = userInfo.UserId,
+                FirstName = userInfo.FirstName,
+                LastName = userInfo.LastName,
+                BirthDate = userInfo.BirthDate
+            };
+
+            var updatedUser = _userRepo.UpdateUser(entityUser);
+
+            return new User
+            {
+                UserId = updatedUser.UserId,
+                FirstName = updatedUser.FirstName,
+                LastName = updatedUser.LastName,
+                BirthDate = updatedUser.BirthDate,
+            };
+        }
+
+        public void DeleteUser(int userId)
+        {
+            _userRepo.DeleteUser(userId);
         }
     }
 }
